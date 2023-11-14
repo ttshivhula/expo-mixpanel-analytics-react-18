@@ -1,6 +1,6 @@
 {
   "name": "@statsministeriet/expo-mixpanel-analytics-react-18",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Mixpanel integration for use with React Native apps built on Expo 47, react 18 and react-native >71",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
