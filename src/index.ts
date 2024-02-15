@@ -1,11 +1,11 @@
-import { Platform, Dimensions } from "react-native";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import Constants from "expo-constants";
 import * as Device from "expo-device";
 
+import { Dimensions, Platform } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Buffer } from "buffer";
+import Constants from "expo-constants";
+import DeviceInfo from "react-native-device-info";
 
 const MIXPANEL_API_URL = "https://api.mixpanel.com";
 
@@ -20,19 +20,19 @@ export class ExpoMixpanelAnalytics {
   queue: any[] = [];
   constants: { [key: string]: string | number | void } = {};
   superProps: any = {};
-  brand?:string
+  brand?: string;
 
   constructor(token, storageKey = "mixpanel:super:props") {
     this.storageKey = storageKey;
 
     this.token = token;
     this.userId = null;
-    this.clientId = Constants.deviceId
+    this.clientId = DeviceInfo.getDeviceId();
     this.constants = {
-      app_build_number: Constants.manifest?.revisionId,
-      app_id: Constants.manifest?.slug,
-      app_name: Constants.manifest?.name,
-      app_version_string: Constants.manifest?.version,
+      app_build_number: DeviceInfo.getBuildNumber(),
+      app_id: DeviceInfo.getBundleId(),
+      app_name: DeviceInfo.getApplicationName(),
+      app_version_string: DeviceInfo.getVersion(),
       device_name: Constants.deviceName,
       expo_app_ownership: Constants.appOwnership || undefined,
       os_version: Platform.Version,
@@ -48,10 +48,9 @@ export class ExpoMixpanelAnalytics {
         user_agent: userAgent,
       });
 
-      this.brand = Device.brand|| undefined;
+      this.brand = Device.brand || undefined;
       this.platform = Platform.OS;
       this.model = Device.modelName || undefined;
-
 
       AsyncStorage.getItem(this.storageKey, (_, result) => {
         if (result) {
