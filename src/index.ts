@@ -1,5 +1,3 @@
-import * as Device from "expo-device";
-
 import { Dimensions, Platform } from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -45,9 +43,7 @@ export class ExpoMixpanelAnalytics {
         user_agent: userAgent,
       });
 
-      this.brand = Device.brand || undefined;
       this.platform = Platform.OS;
-      this.model = Device.modelName || undefined;
 
       AsyncStorage.getItem(this.storageKey, (_, result) => {
         if (result) {
