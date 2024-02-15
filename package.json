@@ -1,6 +1,6 @@
 {
-  "name": "@statsministeriet/expo-mixpanel-analytics-react-18",
-  "version": "4.0.0",
+  "name": "@ttshivhula/expo-mixpanel-analytics-react-18",
+  "version": "1.0.2",
   "description": "Mixpanel integration for use with React Native apps built on Expo 47, react 18 and react-native >71",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/statsministeriet/expo-mixpanel-analytics-react-18.git"
+    "url": "git+https://github.com/ttshivhula/expo-mixpanel-analytics-react-18.git"
   },
   "keywords": [
     "react",
@@ -26,14 +26,13 @@
   "author": "Ben Awad",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/statsministeriet/expo-mixpanel-analytics-react-18/issues"
+    "url": "https://github.com/ttshivhula/expo-mixpanel-analytics-react-18/issues"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
     "buffer": "6",
     "expo-constants": "^14.0.2",
-    "expo-device": "^5.0.0",
-    "react-native-device-info": "^10.12.0"
+    "expo-device": "^5.0.0"
   },
   "devDependencies": {
     "@types/react-native": "^0.67.2",

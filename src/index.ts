@@ -5,7 +5,7 @@ import { Dimensions, Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Buffer } from "buffer";
 import Constants from "expo-constants";
-import DeviceInfo from "react-native-device-info";
+import { v4 as uuidv4 } from "uuid";
 
 const MIXPANEL_API_URL = "https://api.mixpanel.com";
 
@@ -27,15 +27,12 @@ export class ExpoMixpanelAnalytics {
 
     this.token = token;
     this.userId = null;
-    this.clientId = DeviceInfo.getDeviceId();
+    this.init();
     this.constants = {
-      app_build_number: DeviceInfo.getBuildNumber(),
-      app_id: DeviceInfo.getBundleId(),
-      app_name: DeviceInfo.getApplicationName(),
-      app_version_string: DeviceInfo.getVersion(),
       device_name: Constants.deviceName,
       expo_app_ownership: Constants.appOwnership || undefined,
       os_version: Platform.Version,
+      $os: Platform.OS,
     };
 
     Constants.getWebViewUserAgentAsync().then((userAgent) => {
@@ -63,6 +60,15 @@ export class ExpoMixpanelAnalytics {
         this._flush();
       });
     });
+  }
+
+  async init() {
+    let clientId = await AsyncStorage.getItem("mixpanel:clientId");
+    if (!clientId) {
+      clientId = uuidv4();
+      await AsyncStorage.setItem("mixpanel:clientId", clientId as string);
+    }
+    this.clientId = clientId as string;
   }
 
   register(props: any) {
@@ -151,6 +157,9 @@ export class ExpoMixpanelAnalytics {
         ...this.superProps,
       },
     };
+    if (this.clientId) {
+      data.properties.distinct_id = this.clientId;
+    }
     if (this.userId) {
       data.properties.distinct_id = this.userId;
     }
